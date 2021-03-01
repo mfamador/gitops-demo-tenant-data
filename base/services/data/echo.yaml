@@ -4,6 +4,7 @@ metadata:
   name: echo
 spec:
   releaseName: echo
+  serviceAccountName: data-team
   chart:
     spec:
       chart: charts/api

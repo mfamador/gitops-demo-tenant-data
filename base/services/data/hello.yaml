@@ -4,6 +4,7 @@ metadata:
   name: hello
 spec:
   releaseName: hello
+  serviceAccountName: data-team
   chart:
     spec:
       chart: charts/api
