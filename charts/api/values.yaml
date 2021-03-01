@@ -11,7 +11,6 @@ image:
     semver:
       expr: 1.0.x
 
-
 imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
