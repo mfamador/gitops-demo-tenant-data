@@ -4,13 +4,13 @@ metadata:
   name: echo
 spec:
   releaseName: echo
-  serviceAccountName: data-team
+  serviceAccountName: data
   chart:
     spec:
       chart: charts/api
       sourceRef:
         kind: GitRepository
-        name: data-team
+        name: data
   interval: 5m
   install:
     remediation:

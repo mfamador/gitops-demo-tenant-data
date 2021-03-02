@@ -7,7 +7,7 @@ spec:
   checkout:
     branch: main
     gitRepositoryRef:
-      name: data-team
+      name: data
   commit:
     authorEmail: fluxcdbot@users.noreply.github.com
     authorName: fluxcdbot
