@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     image:
-      tag: 1.0.9 # {"$imagepolicy": "data:hello:tag"}
+      tag: 1.0.10 # {"$imagepolicy": "data:hello:tag"}
       automation:
         semver:
           expr: 1.x.x
