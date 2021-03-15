@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: pipeline-canary
 spec:
-  releaseName: pipelinee-canary
+  releaseName: pipeline-canary
   serviceAccountName: data
   chart:
     spec:
