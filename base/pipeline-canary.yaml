@@ -25,6 +25,8 @@ spec:
       protocol: TCP
     prometheus:
       enabled: true
+    hosts:
+    - pipeline-canary.data.svc.cluster.local
     canary:
       enabled: true
       service:
