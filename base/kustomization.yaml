@@ -7,3 +7,4 @@ bases:
 resources:
 - echo.yaml
 - hello.yaml
+- pipeline.yaml

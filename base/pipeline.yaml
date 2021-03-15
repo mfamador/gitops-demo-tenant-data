@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pipeline
+spec:
+  releaseName: pipeline
+  serviceAccountName: data
+  chart:
+    spec:
+      chart: charts/api
+      sourceRef:
+        kind: GitRepository
+        name: data
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: marcoamador/pipeline
+    ports:
+    - name: http
+      containerPort: 4195
+      protocol: TCP
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
