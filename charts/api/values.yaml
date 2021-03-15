@@ -1,5 +1,11 @@
 ---
+
 replicaCount: 1
+hpa:
+  enabled: false
+  cpu: 80
+  memory: 80
+  maxReplicas: 2
 
 image:
   repository: repository/image
@@ -40,8 +46,8 @@ canary:
     webhooks: []
 
 imagePullSecrets: [ ]
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: { }
+fullnameOverride: { }
 
 deployment:
   antiaffinity:
@@ -75,12 +81,6 @@ annotations: { }
 labels: { }
 
 resources: { }
-
-hpa:
-  enabled: false
-  cpu: 80
-  memory: 80
-  maxReplicas: 2
 
 env: { }
 

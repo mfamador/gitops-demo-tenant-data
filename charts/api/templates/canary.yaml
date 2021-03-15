@@ -1,12 +1,12 @@
 {{- if .Values.canary.enabled }}
+  {{- $name := include "api.name" . -}}
   {{- with $canary := .Values.canary }}
 apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
-  name: {{ template "api.name" . }}
+  name: {{ $name }}
 spec:
   skipAnalysis: {{ $canary.skipAnalysis }}
-  # deployment reference
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -18,11 +18,11 @@ spec:
   autoscalerRef:
     apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
-    name: {{ template "api.name" . }}
+    name: {{  $name }}
   service:
     primary:
       labels:
-        app: {{ template "api.name" . }}
+        app: {{ $name }}
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
@@ -30,7 +30,7 @@ spec:
         {{- end}}
     canary:
       labels:
-        app: {{ template "api.name" . }}
+        app: {{ $name }}
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
