@@ -8,3 +8,4 @@ resources:
 - echo.yaml
 - hello.yaml
 - pipeline.yaml
+- pipeline-canary.yaml

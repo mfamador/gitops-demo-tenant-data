@@ -11,6 +11,32 @@ image:
     semver:
       expr: 1.0.x
 
+canary:
+  enabled: false
+  progressDeadlineSeconds: 60
+  skipAnalysis: false
+  service:
+    port: 80
+    targetPort: 80
+    portDiscovery: false
+    tls:
+      mode: DISABLE
+    retries:
+      attemps: 3
+      perTryTimeout: 1s
+      retryOn: "gateway-error,connect-failure,refused-stream"
+    match:
+      prefix: "/"
+      rewrite: "/"
+  analysis:
+    defaultMetrics: true
+    interval: 5m
+    threshold: 3
+    maxWeight: 50
+    stepWeight: 10
+    metrics: []
+    webhooks: []
+
 imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""

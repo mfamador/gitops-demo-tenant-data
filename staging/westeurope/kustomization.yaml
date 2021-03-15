@@ -5,4 +5,5 @@ bases:
 patchesStrategicMerge:
 - echo-patch.yaml
 - hello-patch.yaml
+- pipeline-canary-patch.yaml
 - pipeline-patch.yaml

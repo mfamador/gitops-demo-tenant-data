@@ -24,6 +24,10 @@ spec:
       protocol: TCP
     prometheus:
       enabled: true
+    canary:
+      enabled: true
+      service:
+        targetPort: 4195
     ingress:
       enabled: true
       annotations:

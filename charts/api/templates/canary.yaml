@@ -1,0 +1,138 @@
+{{- if .Values.canary.enabled }}
+  {{- with $canary := .Values.canary }}
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: {{ $.Values.name }}
+spec:
+  skipAnalysis: {{ $canary.skipAnalysis }}
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $.Values.name }}
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: {{ $canary.progressDeadlineSeconds }}
+  # HPA reference (optional)
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta1
+    kind: HorizontalPodAutoscaler
+    name: {{ $.Values.name }}
+  service:
+    primary:
+      labels:
+        app: {{ $.Values.name }}
+        chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
+        release: {{ $.Release.Name }}
+        {{- range $key, $value := $.Values.service.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end}}
+    canary:
+      labels:
+        app: {{ $.Values.name }}
+        chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
+        release: {{ $.Release.Name }}
+        {{- range $key, $value := $.Values.service.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    {{- if $.Values.service.annotations }}
+      annotations:
+        {{- range $key, $value := $.Values.service.annotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    {{- end }}
+    # service port number
+    port: {{ $canary.service.port }}
+    # container port number or name (optional)
+    targetPort: {{ $canary.service.targetPort }}
+    # we need portDiscovery when there are multiple ports (http and grpc, for instance)
+    portDiscovery: {{ $canary.service.portDiscovery }}
+    # Istio gateways (optional)
+    {{- if gt (len $canary.service.gateways) 0 }}
+    gateways:
+      {{- range $gateway := $canary.service.gateways }}
+      - {{ $gateway | quote }}
+      {{- end}}
+    {{- end}}
+    # Istio virtual service host names (optional)
+    hosts:
+      {{- if $.Values.hostsStringArray }}
+      {{ $parts := split "," $.Values.hostsStringArray }}
+
+      {{- range $host := $parts }}
+      - {{ $host | quote }}
+      {{- end}}
+
+      {{ else }}
+
+      {{- range $host := $.Values.hosts }}
+      - {{ $host | quote }}
+      {{- end}}
+
+      {{- end}}
+    # Istio traffic policy (optional)
+    trafficPolicy:
+      tls:
+        # use ISTIO_MUTUAL when mTLS is enabled
+        mode: {{ $canary.service.tls.mode }}
+    # Istio virtual service HTTP match conditions (optional)
+    match:
+      - uri:
+          prefix: {{ $canary.service.match.prefix }}
+    {{- if $canary.service.match.headers }}
+    headers:
+{{ toYaml $canary.service.match.headers | trim | indent 6}}
+    {{- end }}
+    {{- if $canary.service.match.corsPolicy }}
+    corsPolicy:
+{{ toYaml $canary.service.match.corsPolicy | trim | indent 6}}
+    {{- end }}
+    # HTTP rewrite (optional)
+    rewrite:
+      uri: {{ $canary.service.match.rewrite }}
+    # Istio retry policy (optional)
+    retries:
+      attempts: {{ $canary.service.retries.attemps }}
+      perTryTimeout: {{ $canary.service.retries.perTryTimeout }}
+      retryOn: {{ $canary.service.retries.retryOn }}
+  analysis:
+    # schedule interval (default 60s)
+    interval: {{ $canary.analysis.interval }}
+    # max number of failed metric checks before rollback
+    threshold: {{ $canary.analysis.threshold }}
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: {{ $canary.analysis.maxWeight }}
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: {{ $canary.analysis.stepWeight }}
+    metrics:
+      {{- if $canary.analysis.defaultMetrics }}
+      - name: error-rate
+        templateRef:
+          name: error-rate
+          namespace: istio-system
+        thresholdRange:
+          max: 1
+        interval: 30s
+      - name: latency
+        templateRef:
+          name: latency
+          namespace: istio-system
+        thresholdRange:
+          max: 500
+        interval: 30s
+      {{- end }}
+      {{- range $metric := $canary.analysis.metrics }}
+      - {{ toYaml . | indent 8 | trim }}
+      {{- end}}
+    # testing (optional)
+    {{- if gt (len $canary.analysis.webhooks) 0 }}
+    webhooks:
+      {{- range $webhook := $canary.analysis.webhooks }}
+      - {{ toYaml . | indent 8 | trim }}
+      {{- end}}
+    {{- end }}
+  {{- end }}
+{{- end }}
