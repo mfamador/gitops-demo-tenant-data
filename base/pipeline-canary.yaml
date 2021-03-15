@@ -28,9 +28,18 @@ spec:
     hpa:
       enabled: true
     hosts:
-    - pipeline-canary.data.svc.cluster.local
+    - pipeline-canary.data
     canary:
       enabled: true
+      analysis:
+        webhooks:
+        - name: load-test
+          type: rollout
+          url: http://flagger-loadtester.istio-system/
+          timeout: 5s
+          metadata:
+            type: cmd
+            cmd: hey -z 2m -q 10 -c 2 http://pipeline-canary-canary.data/ping
       service:
         targetPort: 4195
     ingress:
