@@ -52,7 +52,7 @@ Common labels
 app: {{ include "api.name" . }}
 instance: {{ .Release.Name }}
 helm.sh/chart: {{ include "api.chart" . }}
-release: prometheus-operator
+tier: cluster
 {{- if .Values.labels -}}
 {{- .Values.labels | toYaml | trimSuffix "\n" | nindent 0 }}
 {{- end -}}
