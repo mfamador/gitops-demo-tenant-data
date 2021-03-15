@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     image:
-      tag: 0.1.1 # {"$imagepolicy": "data:pipeline-canary:tag"}
+      tag: 0.1.2 # {"$imagepolicy": "data:pipeline-canary:tag"}
       automation:
         semver:
           expr: 1.x.x
