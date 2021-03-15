@@ -1,8 +1,6 @@
 ---
 replicaCount: 1
 
-name: api
-
 image:
   repository: repository/image
   tag: 1.0.0

@@ -3,7 +3,7 @@
 apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
-  name: {{ $.Values.name }}
+  name: {{ template "api.name" . }}
 spec:
   skipAnalysis: {{ $canary.skipAnalysis }}
   # deployment reference
