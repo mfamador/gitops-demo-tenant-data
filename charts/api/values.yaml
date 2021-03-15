@@ -19,6 +19,8 @@ canary:
     port: 80
     targetPort: 80
     portDiscovery: false
+    gateways:
+    - istio-system/istio-ingressgw
     tls:
       mode: DISABLE
     retries:
