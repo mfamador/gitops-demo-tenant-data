@@ -18,11 +18,11 @@ spec:
   autoscalerRef:
     apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
-    name: {{ $.Values.name }}
+    name: {{ template "api.name" . }}
   service:
     primary:
       labels:
-        app: {{ $.Values.name }}
+        app: {{ template "api.name" . }}
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
@@ -30,7 +30,7 @@ spec:
         {{- end}}
     canary:
       labels:
-        app: {{ $.Values.name }}
+        app: {{ template "api.name" . }}
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
