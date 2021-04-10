@@ -1,9 +1,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pipeline-canary
+  name: critical
 spec:
-  releaseName: pipeline-canary
+  releaseName: critical
   serviceAccountName: data
   chart:
     spec:
@@ -16,19 +16,19 @@ spec:
     remediation:
       retries: 3
   values:
-    name: pipeline-canary
+    name: critical
     image:
-      repository: marcoamador/pipeline
+      repository: marcoamador/critical
     ports:
     - name: http
-      containerPort: 4195
+      containerPort: 8000
       protocol: TCP
     prometheus:
       enabled: true
     hpa:
       enabled: true
     hosts:
-    - pipeline-canary.data
+    - critical.data
     canary:
       enabled: true
       analysis:
@@ -39,7 +39,7 @@ spec:
           timeout: 5s
           metadata:
             type: cmd
-            cmd: hey -z 2m -q 10 -c 2 http://pipeline-canary-canary.data/ping
+            cmd: hey -z 2m -q 10 -c 2 http://critical-canary.data/ping
       service:
         targetPort: 4195
     ingress:

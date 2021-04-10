@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: hello
+  name: critical
 spec:
   values:
-    environment: staging
+    environment: production
     image:
-      tag: 1.0.10 # {"$imagepolicy": "data:staging-hello:tag"}
+      tag: 0.1.3 # {"$imagepolicy": "data:production-critical:tag"}
       automation:
         semver:
           expr: 1.x.x

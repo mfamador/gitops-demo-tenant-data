@@ -4,8 +4,9 @@ metadata:
   name: pipeline
 spec:
   values:
+    environment: staging
     image:
-      tag: 0.1.3 # {"$imagepolicy": "data:pipeline:tag"}
+      tag: 0.1.3 # {"$imagepolicy": "data:staging-pipeline:tag"}
       automation:
         semver:
           expr: x.x.x

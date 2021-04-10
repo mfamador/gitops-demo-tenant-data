@@ -1,11 +1,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pipeline-canary
+  name: critical
 spec:
   values:
     ingress:
       hosts:
-      - host: pipeline-canary.staging.euw
+      - host: critical.production.eun
         paths:
         - "/"

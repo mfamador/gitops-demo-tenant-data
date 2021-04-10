@@ -1,11 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pipeline-canary
+  name: critical
 spec:
   values:
+    environment: staging
     image:
-      tag: 0.1.3 # {"$imagepolicy": "data:pipeline-canary:tag"}
+      tag: 0.0.0 # {"$imagepolicy": "data:staging-critical:tag"}
       automation:
         semver:
-          expr: 1.x.x
+          expr: x.x.x
