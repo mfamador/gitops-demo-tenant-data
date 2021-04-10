@@ -41,8 +41,7 @@ spec:
             type: cmd
             cmd: hey -z 2m -q 10 -c 2 http://critical-canary.data/ping
       service:
-        targetPort: 4195
+        targetPort: 8000
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
+      enabled: false
+
