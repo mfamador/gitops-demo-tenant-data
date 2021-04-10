@@ -6,7 +6,7 @@ spec:
   values:
     environment: staging
     image:
-      tag: 1.0.0 # {"$imagepolicy": "data:staging-critical:tag"}
+      tag: 1.0.1 # {"$imagepolicy": "data:staging-critical:tag"}
       automation:
         semver:
           expr: x.x.x
