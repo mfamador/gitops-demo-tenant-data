@@ -78,7 +78,6 @@ ingress:
   enabled: false
 
 virtualService:
-  enabled: false
   gateways:
   - istio-system/istio-ingressgw
   match:

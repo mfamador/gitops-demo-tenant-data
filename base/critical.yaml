@@ -81,6 +81,3 @@ spec:
         portDiscovery: true # set to true when using gRPC
         tls:
           mode: DISABLE
-    ingress:
-      enabled: false
-
