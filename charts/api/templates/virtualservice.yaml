@@ -9,9 +9,20 @@ spec:
     - {{ $gateway }}
     {{- end }}
   hosts:
+    {{- if $.Values.hostsStringArray }}
+    {{- $parts := split "," $.Values.hostsStringArray }}
+
+    {{- range $host := $parts }}
+    - {{ $host | quote }}
+    {{- end -}}
+
+    {{ else }}
+
     {{- range $host := $.Values.hosts }}
     - {{ $host | quote }}
     {{- end -}}
+
+    {{- end }}
   http:
   {{- range $match := .Values.virtualService.match }}
   - name: {{ $match.name }}
