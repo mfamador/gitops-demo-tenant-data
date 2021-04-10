@@ -39,7 +39,7 @@ canary:
       rewrite: "/"
   analysis:
     defaultMetrics: true
-    interval: 2m
+    interval: 1m
     threshold: 3
     maxWeight: 50
     stepWeight: 10
