@@ -46,6 +46,9 @@ canary:
     metrics: []
     webhooks: []
 
+hosts:
+- "*"
+
 imagePullSecrets: [ ]
 nameOverride: { }
 fullnameOverride: { }
@@ -73,6 +76,27 @@ servicePort: http
 
 ingress:
   enabled: false
+
+virtualService:
+  enabled: false
+  gateways:
+  - istio-system/istio-ingressgw
+  match:
+  - name: default
+    prefixes:
+    - /
+    rewrite: /
+    routes:
+    - host: app.default.svc.cluster.local
+      port: 80
+  tcp:
+    enabled: false
+    match:
+    - port: 80
+      routes:
+      - host: app.default.svc.cluster.local
+        port: 80
+
 
 prometheus:
   enabled: false

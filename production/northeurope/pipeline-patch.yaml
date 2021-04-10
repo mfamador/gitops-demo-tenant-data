@@ -4,8 +4,6 @@ metadata:
   name: pipeline
 spec:
   values:
-    ingress:
-      hosts:
-      - host: pipeline.production.eun
-        paths:
-        - "/"
+    hosts:
+    - pipeline.production.eun
+    - pipeline.data.svc.cluster.local

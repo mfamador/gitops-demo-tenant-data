@@ -4,8 +4,6 @@ metadata:
   name: critical
 spec:
   values:
-    ingress:
-      hosts:
-      - host: critical.production.eun
-        paths:
-        - "/"
+    hosts:
+    - critical.production.eun
+    - critical.data.svc.cluster.local

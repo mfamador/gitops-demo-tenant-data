@@ -4,8 +4,6 @@ metadata:
   name: hello
 spec:
   values:
-    ingress:
-      hosts:
-      - host: hello.staging.eun
-        paths:
-        - "/"
+    hosts:
+    - hello.staging.eun
+    - hello.data.svc.cluster.local

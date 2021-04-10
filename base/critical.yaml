@@ -32,6 +32,12 @@ spec:
     canary:
       enabled: true
       analysis:
+        defaultMetrics: true
+        interval: 2m
+        maxWeight: 50
+        metrics: [ ]
+        stepWeight: 10
+        threshold: 3
         webhooks:
         - name: load-test
           type: rollout
@@ -39,9 +45,42 @@ spec:
           timeout: 5s
           metadata:
             type: cmd
-            cmd: hey -z 2m -q 10 -c 2 http://critical-canary.data/ping
+            cmd: hey -z 2m -q 10 -c 2 http://critical.data/loadtest
+      progressDeadlineSeconds: 60
       service:
+        match:
+          prefix: /critical/
+          rewrite: /
+          headers:
+            request:
+              add:
+                X-Forwarded-Prefix: "/critical"
+          corsPolicy:
+            allowMethods:
+            - GET
+            - PUT
+            - POST
+            - OPTIONS
+            - HEAD
+            - DELETE
+            - PATCH
+            allowHeaders:
+            - authorization
+            - content-type
+            - accept
+            - origin
+            - user-agent
+            allowCredentials: false
+            maxAge: "24h"
+        port: 80
+        retries:
+          attemps: 3
+          perTryTimeout: 1s
+          retryOn: gateway-error,connect-failure,refused-stream
         targetPort: 8000
+        portDiscovery: true # set to true when using gRPC
+        tls:
+          mode: DISABLE
     ingress:
       enabled: false
 

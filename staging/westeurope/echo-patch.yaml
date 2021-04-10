@@ -4,8 +4,6 @@ metadata:
   name: echo
 spec:
   values:
-    ingress:
-      hosts:
-      - host: echo.staging.euw
-        paths:
-        - "/"
+    hosts:
+    - echo.staging.euw
+    - echo.data.svc.cluster.local
