@@ -6,4 +6,4 @@ metadata:
 spec:
   image: "{{ .Values.image.repository }}"
   interval: {{ .Values.image.automation.interval }}
-  {{- end}}
+{{- end}}
