@@ -49,12 +49,12 @@ spec:
       progressDeadlineSeconds: 60
       service:
         match:
-          prefix: /critical/
+          prefix: /
           rewrite: /
           headers:
             request:
               add:
-                X-Forwarded-Prefix: "/critical"
+                X-Forwarded-Prefix: "/"
           corsPolicy:
             allowMethods:
             - GET
