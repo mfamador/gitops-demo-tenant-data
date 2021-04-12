@@ -7,7 +7,7 @@ spec:
   serviceAccountName: data
   chart:
     spec:
-      chart: charts/api
+      chart: _charts/api
       sourceRef:
         kind: GitRepository
         name: data
