@@ -33,7 +33,7 @@ spec:
       enabled: true
       analysis:
         defaultMetrics: true
-        interval: 2m
+        interval: 30s
         maxWeight: 50
         metrics: [ ]
         stepWeight: 10
@@ -45,7 +45,7 @@ spec:
           timeout: 5s
           metadata:
             type: cmd
-            cmd: hey -z 2m -q 10 -c 2 http://critical.data/loadtest
+            cmd: hey -z 30s -q 5 -c 2 http://critical.data/loadtest
       progressDeadlineSeconds: 60
       service:
         match:
