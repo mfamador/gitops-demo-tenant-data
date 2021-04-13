@@ -16,6 +16,7 @@ spec:
     remediation:
       retries: 3
   values:
+    name: pipeline
     image:
       repository: marcoamador/pipeline
     ports:

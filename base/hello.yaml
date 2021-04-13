@@ -16,6 +16,7 @@ spec:
     remediation:
       retries: 3
   values:
+    name: hello
     image:
       repository: marcoamador/hello
     ports:
