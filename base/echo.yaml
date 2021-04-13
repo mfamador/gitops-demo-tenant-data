@@ -20,3 +20,12 @@ spec:
     image:
       repository: marcoamador/echo
       tag: 1.0.0
+    virtualService:
+      match:
+      - name: default
+        prefixes:
+        - /
+        rewrite: /
+        routes:
+        - host: echo.data.svc.cluster.local
+          port: 80

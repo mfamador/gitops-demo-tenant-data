@@ -25,3 +25,12 @@ spec:
       protocol: TCP
     prometheus:
       enabled: true
+    virtualService:
+      match:
+      - name: default
+        prefixes:
+        - /
+        rewrite: /
+        routes:
+        - host: pipeline.data.svc.cluster.local
+          port: 80

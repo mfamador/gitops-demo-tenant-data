@@ -23,3 +23,12 @@ spec:
     - name: http
       containerPort: 8000
       protocol: TCP
+    virtualService:
+      match:
+      - name: default
+        prefixes:
+        - /
+        rewrite: /
+        routes:
+        - host: hello.data.svc.cluster.local
+          port: 80
