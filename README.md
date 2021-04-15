@@ -8,8 +8,5 @@
 ### Main Repo
 https://github.com/mfamador/gitops-demo-multitenant
 
-### Other tenant Repo
-https://github.com/mfamador/gitops-demo-tenant-core
-
 ### This tenant Repo
 https://github.com/mfamador/gitops-demo-tenant-data
