@@ -2,10 +2,3 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: pipeline
-spec:
-  values:
-    image:
-      tag: 0.1.3 # {"$imagepolicy": "data:production-pipeline:tag"}
-      automation:
-        semver:
-          expr: 1.x.x

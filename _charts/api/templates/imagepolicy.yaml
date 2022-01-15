@@ -2,7 +2,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1alpha1
 kind: ImagePolicy
 metadata:
-  name: {{ .Values.environment }}-{{ template "api.name" . }}
+  name: {{ .Values.environment }}-{{ .Values.region }}-{{ template "api.name" . }}
 spec:
   imageRepositoryRef:
     name: {{ template "api.name" . }}
