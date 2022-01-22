@@ -8,6 +8,6 @@ patch: |-
     value: staging
   - op: replace
     path: /spec/values/region
-    value: uen
+    value: eun
 target:
   kind: HelmRelease

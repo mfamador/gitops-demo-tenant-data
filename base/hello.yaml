@@ -19,6 +19,9 @@ spec:
     name: hello
     image:
       repository: marcoamador/hello
+      automation:
+        semver:
+          expr: 1.x.x
     ports:
     - name: http
       containerPort: 8000

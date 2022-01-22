@@ -9,6 +9,3 @@ spec:
     - pipeline.data.svc.cluster.local
     image:
       tag: 0.1.3 # {"$imagepolicy": "data:production-euw-pipeline:tag"}
-      automation:
-        semver:
-          expr: 1.x.x

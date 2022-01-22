@@ -7,5 +7,3 @@ patchesStrategicMerge:
 - hello-patch.yaml
 - critical-patch.yaml
 - pipeline-patch.yaml
-transformers:
-- _env.yaml

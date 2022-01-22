@@ -9,6 +9,3 @@ spec:
     - hello.data.svc.cluster.local
     image:
       tag: 1.0.10 # {"$imagepolicy": "data:production-euw-hello:tag"}
-      automation:
-        semver:
-          expr: 1.x.x

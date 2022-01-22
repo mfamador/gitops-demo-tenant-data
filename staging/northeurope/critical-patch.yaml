@@ -9,6 +9,3 @@ spec:
     - critical.data.svc.cluster.local
     image:
       tag: 1.0.8 # {"$imagepolicy": "data:staging-eun-critical:tag"}
-      automation:
-        semver:
-          expr: x.x.x
