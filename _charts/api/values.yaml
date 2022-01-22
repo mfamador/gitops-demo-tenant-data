@@ -39,6 +39,7 @@ canary:
       prefix: "/"
       rewrite: "/"
   analysis:
+    primaryReadyThreshold: 0
     defaultMetrics: true
     interval: 1m
     threshold: 3

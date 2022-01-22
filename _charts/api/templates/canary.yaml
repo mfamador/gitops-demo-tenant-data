@@ -107,6 +107,10 @@ spec:
     # canary increment step
     # percentage (0-100)
     stepWeight: {{ $canary.analysis.stepWeight }}
+    # threshold of primary pods that need to be available to consider it ready
+    # before starting rollout. this is optional and the default is 0
+    # percentage (0-100)
+    primaryReadyThreshold: {{ $canary.analysis.primaryReadyThreshold }}
     metrics:
       {{- if $canary.analysis.defaultMetrics }}
       - name: error-rate
