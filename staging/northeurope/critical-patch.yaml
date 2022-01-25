@@ -8,4 +8,4 @@ spec:
       - critical.staging.eun
       - critical.data.svc.cluster.local
     image:
-      tag: 0.9.3 # {"$imagepolicy": "data:staging-eun-critical:tag"}
+      tag: 0.9.5 # {"$imagepolicy": "data:staging-eun-critical:tag"}
