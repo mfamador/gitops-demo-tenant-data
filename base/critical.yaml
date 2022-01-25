@@ -48,7 +48,7 @@ spec:
           timeout: 5s
           metadata:
             type: cmd
-            cmd: hey -z 30s -q 5 -c 2 http://critical.data/loadtest
+            cmd: hey -z 30s -q 5 -c 2 http://critical-canary.data/loadtest
       progressDeadlineSeconds: 60
       service:
         match:
