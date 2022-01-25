@@ -40,7 +40,7 @@ spec:
         maxWeight: 50
         metrics: [ ]
         stepWeight: 10
-        threshold: 1
+        threshold: 3
         webhooks:
         - name: load-test
           type: rollout
