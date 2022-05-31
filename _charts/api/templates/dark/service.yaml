@@ -1,10 +1,10 @@
-{{- if not .Values.canary.enabled }}
+{{- if .Values.dark.canary.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "api.name" . }}
+  name: {{ include "api.name" . }}-dark
   labels:
-    app: {{ template "api.name" . }}
+    app: {{ template "api.name" . }}-dark
     release: {{ .Release.Name }}
   {{- if .Values.service.annotations }}
   annotations:
@@ -20,6 +20,6 @@ spec:
     targetPort: {{ .Values.servicePort }}
     protocol: TCP
   selector:
-    app: {{ include "api.name" . }}
+    app: {{ include "api.name" . }}-dark
     release: {{ .Release.Name }}
 {{- end }}

@@ -2,6 +2,8 @@
 environment: development
 region: ue
 
+releaseName: myapp
+
 replicaCount: 1
 hpa:
   enabled: false
@@ -20,7 +22,7 @@ image:
       expr: 1.0.x
 
 canary:
-  enabled: false
+  enabled: true
   progressDeadlineSeconds: 60
   skipAnalysis: false
   service:
@@ -129,3 +131,46 @@ nodeSelector: { }
 tolerations: [ ]
 
 affinity: { }
+
+dark:
+  header:
+    name: side
+    value: dark
+  enabled: false
+  image:
+    repository: repository/image-dark
+    tag: 1.0.0
+    pullPolicy: Always
+    automation:
+      enabled: true
+      interval: 1m0s
+      semver:
+        expr: 2.0.x
+  canary:
+    enabled: true
+    progressDeadlineSeconds: 60
+    skipAnalysis: false
+    service:
+      port: 80
+      targetPort: 80
+      portDiscovery: false
+      gateways:
+      - istio-system/istio-ingressgw
+      tls:
+        mode: DISABLE
+      retries:
+        attemps: 3
+        perTryTimeout: 1s
+        retryOn: "gateway-error,connect-failure,refused-stream"
+      match:
+        prefix: "/"
+        rewrite: "/"
+    analysis:
+      primaryReadyThreshold: 0
+      defaultMetrics: true
+      interval: 1m
+      threshold: 3
+      maxWeight: 50
+      stepWeight: 10
+      metrics: [ ]
+      webhooks: [ ]

@@ -1,21 +1,21 @@
-{{- if .Values.prometheus.enabled }}
+{{- if and .Values.prometheus.enabled .Values.dark.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "api.name" . }}
+  name: {{ include "api.name" . }}-dark
   labels:
-    app: {{ template "api.name" . }}
+    app: {{ template "api.name" . }}-dark
     release: {{ .Release.Name }}
     tier: "cluster"
 spec:
   endpoints:
   - scheme: http
     targetPort: http
-  jobLabel: {{ include "api.name" . }}
+  jobLabel: {{ include "api.name" . }}-dark
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
   selector:
     matchLabels:
-      app: {{ include "api.name" . }}
+      app: {{ include "api.name" . }}-dark
   {{ end }}

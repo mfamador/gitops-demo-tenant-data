@@ -1,0 +1,16 @@
+{{- if and .Values.dark.image.automation.enabled .Values.dark.enabled -}}
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImagePolicy
+metadata:
+  name: {{ .Values.environment }}-{{ .Values.region }}-{{ template "api.name" . }}-dark
+spec:
+  imageRepositoryRef:
+    name: {{ template "api.name" . }}-dark
+  {{- if .Values.dark.image.automation.filterTags }}
+  filterTags:
+    pattern: {{ .Values.dark.image.automation.filterTags.pattern }}
+  {{- end}}
+  policy:
+    semver:
+      range: {{ .Values.dark.image.automation.semver.expr }}
+{{- end}}

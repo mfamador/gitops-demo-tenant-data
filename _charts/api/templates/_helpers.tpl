@@ -50,7 +50,7 @@ Common labels
 */}}
 {{- define "api.labels" -}}
 app: {{ include "api.name" . }}
-instance: {{ .Release.Name }}
+release: {{ .Release.Name }}
 helm.sh/chart: {{ include "api.chart" . }}
 tier: cluster
 {{- if .Values.labels -}}

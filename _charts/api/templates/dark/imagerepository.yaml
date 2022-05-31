@@ -1,0 +1,12 @@
+{{- if and .Values.dark.image.automation.enabled .Values.dark.enabled -}}
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImageRepository
+metadata:
+  name: {{ template "api.name" . }}-dark
+  labels:
+    app: {{ template "api.name" . }}-dark
+    release: {{ .Release.Name }}
+spec:
+  image: "{{ .Values.dark.image.repository }}"
+  interval: {{ .Values.dark.image.automation.interval }}
+{{- end}}

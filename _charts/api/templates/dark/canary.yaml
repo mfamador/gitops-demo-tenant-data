@@ -1,12 +1,12 @@
-{{- if .Values.canary.enabled }}
+{{- if .Values.dark.canary.enabled }}
   {{- $name := include "api.name" . -}}
-  {{- with $canary := .Values.canary }}
+  {{- with $canary := .Values.dark.canary }}
 apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
-  name: {{ $name }}
+  name: {{ $name }}-dark
   labels:
-    app: {{ $name }}
+    app: {{ $name }}-dark
     release: {{ $.Release.Name }}
 spec:
   skipAnalysis: {{ $canary.skipAnalysis }}
@@ -55,7 +55,7 @@ spec:
     {{- if gt (len $canary.service.gateways) 0 }}
     gateways:
       {{- range $gateway := $canary.service.gateways }}
-      - {{ $gateway | quote }}
+    - {{ $gateway | quote }}
       {{- end}}
     {{- end}}
     # Istio virtual service host names (optional)
@@ -64,13 +64,13 @@ spec:
       {{ $parts := split "," $.Values.hostsStringArray }}
 
       {{- range $host := $parts }}
-      - {{ $host | quote }}
+    - {{ $host | quote }}
       {{- end}}
 
       {{ else }}
 
       {{- range $host := $.Values.hosts }}
-      - {{ $host | quote }}
+    - {{ $host | quote }}
       {{- end}}
 
       {{- end}}
@@ -81,8 +81,8 @@ spec:
         mode: {{ $canary.service.tls.mode }}
     # Istio virtual service HTTP match conditions (optional)
     match:
-      - uri:
-          prefix: {{ $canary.service.match.prefix }}
+    - uri:
+        prefix: {{ $canary.service.match.prefix }}
     {{- if $canary.service.match.headers }}
     headers:
 {{ toYaml $canary.service.match.headers | trim | indent 6}}
@@ -116,29 +116,29 @@ spec:
     primaryReadyThreshold: {{ $canary.analysis.primaryReadyThreshold }}
     metrics:
       {{- if $canary.analysis.defaultMetrics }}
-      - name: error-rate
-        templateRef:
-          name: error-rate
-          namespace: istio-system
-        thresholdRange:
-          max: 1
-        interval: 30s
-      - name: latency
-        templateRef:
-          name: latency
-          namespace: istio-system
-        thresholdRange:
-          max: 500
-        interval: 30s
+    - name: error-rate
+      templateRef:
+        name: error-rate
+        namespace: istio-system
+      thresholdRange:
+        max: 1
+      interval: 30s
+    - name: latency
+      templateRef:
+        name: latency
+        namespace: istio-system
+      thresholdRange:
+        max: 500
+      interval: 30s
       {{- end }}
       {{- range $metric := $canary.analysis.metrics }}
-      - {{ toYaml . | indent 8 | trim }}
+    - {{ toYaml . | indent 8 | trim }}
       {{- end}}
-    # testing (optional)
+      # testing (optional)
     {{- if gt (len $canary.analysis.webhooks) 0 }}
     webhooks:
       {{- range $webhook := $canary.analysis.webhooks }}
-      - {{ toYaml . | indent 8 | trim }}
+    - {{ toYaml . | indent 8 | trim }}
       {{- end}}
     {{- end }}
   {{- end }}

@@ -6,6 +6,10 @@ metadata:
 spec:
   imageRepositoryRef:
     name: {{ template "api.name" . }}
+  {{- if .Values.image.automation.filterTags }}
+  filterTags:
+    pattern: {{ .Values.image.automation.filterTags.pattern }}
+  {{- end}}
   policy:
     semver:
       range: {{ .Values.image.automation.semver.expr }}
