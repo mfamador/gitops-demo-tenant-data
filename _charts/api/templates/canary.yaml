@@ -18,10 +18,12 @@ spec:
   # to make progress before it is rollback (default 600s)
   progressDeadlineSeconds: {{ $canary.progressDeadlineSeconds }}
   # HPA reference (optional)
+  {{- if $.Values.hpa.enabled }}
   autoscalerRef:
     apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
     name: {{  $name }}
+  {{- end }}
   service:
     primary:
       labels:
