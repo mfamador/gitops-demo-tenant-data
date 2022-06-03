@@ -1,4 +1,4 @@
-{{- if .Values.dark.canary.enabled }}
+{{- if and .Values.dark.enabled .Values.dark.canary.enabled }}
   {{- $name := include "api.name" . -}}
   {{- with $canary := .Values.dark.canary }}
 apiVersion: flagger.app/v1beta1
@@ -13,7 +13,7 @@ spec:
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ $.Values.name }}
+    name: {{ $.Values.name }}-dark
   # the maximum time in seconds for the canary deployment
   # to make progress before it is rollback (default 600s)
   progressDeadlineSeconds: {{ $canary.progressDeadlineSeconds }}
@@ -21,11 +21,11 @@ spec:
   autoscalerRef:
     apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
-    name: {{  $name }}
+    name: {{  $name }}-dark
   service:
     primary:
       labels:
-        app: {{ $name }}
+        app: {{ $name }}-dark
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
@@ -33,7 +33,7 @@ spec:
         {{- end}}
     canary:
       labels:
-        app: {{ $name }}
+        app: {{ $name }}-dark
         chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
         release: {{ $.Release.Name }}
         {{- range $key, $value := $.Values.service.labels }}
