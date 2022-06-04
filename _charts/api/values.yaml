@@ -22,7 +22,7 @@ image:
       expr: 1.0.x
 
 canary:
-  enabled: true
+  enabled: false
   progressDeadlineSeconds: 60
   skipAnalysis: false
   service:

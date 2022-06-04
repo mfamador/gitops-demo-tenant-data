@@ -115,9 +115,9 @@ spec:
       # testing (optional)
     {{- if gt (len $canary.analysis.webhooks) 0 }}
     webhooks:
-      {{- range $webhook := $canary.analysis.webhooks }}
-    - {{ toYaml . | indent 8 | trim }}
-      {{- end}}
+    {{- range $webhook := $canary.analysis.webhooks }}
+    - {{ toYaml . | indent 6 | trim }}
+    {{- end}}
     {{- end }}
   {{- end }}
 {{- end }}
