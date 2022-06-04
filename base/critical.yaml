@@ -21,7 +21,7 @@ spec:
       repository: marcoamador/critical
     automation:
       semver:
-        expr: x.x.x
+        expr: 1.x.x
     ports:
     - name: http
       containerPort: 8000
