@@ -50,6 +50,7 @@ spec:
         port: 80
         targetPort: 8000
     dark:
+      enabled: false
       image:
         repository: marcoamador/critical
         automation:
