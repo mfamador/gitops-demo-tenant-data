@@ -32,8 +32,25 @@ spec:
       enabled: true
     hosts:
     - critical.data
+    canary:
+      enabled: true
+      analysis:
+        # make demo goes faster
+        interval: 15s
+        webhooks:
+        - name: load-test
+          type: rollout
+          url: http://flagger-loadtester.istio-system/
+          timeout: 5s
+          metadata:
+            type: cmd
+            # make demo goes faster
+            cmd: hey -z 12s -q 5 -c 2 http://critical-canary.data/loadtest
+      service:
+        port: 80
+        targetPort: 8000
     dark:
-      enabled: false
+      enabled: true
       image:
         repository: marcoamador/critical
         automation:
@@ -42,6 +59,8 @@ spec:
       canary:
         enabled: true
         analysis:
+          # make demo goes faster
+          interval: 15s
           webhooks:
           - name: load-test
             type: rollout
@@ -49,21 +68,8 @@ spec:
             timeout: 5s
             metadata:
               type: cmd
-              cmd: hey -z 55s -q 5 -c 2 http://critical-dark-canary.data/loadtest
+              # make demo goes faster
+              cmd: hey -z 12s -q 5 -c 2 http://critical-dark-canary.data/loadtest
         service:
           port: 80
           targetPort: 8000
-    canary:
-      enabled: true
-      analysis:
-        webhooks:
-        - name: load-test
-          type: rollout
-          url: http://flagger-loadtester.istio-system/
-          timeout: 5s
-          metadata:
-            type: cmd
-            cmd: hey -z 55s -q 5 -c 2 http://critical-canary.data/loadtest
-      service:
-        port: 80
-        targetPort: 8000
