@@ -23,6 +23,7 @@ spec:
     kind: HorizontalPodAutoscaler
     name: {{  $name }}-dark
   service:
+    delegation: true
     primary:
       labels:
         app: {{ $name }}-dark
@@ -51,29 +52,6 @@ spec:
     targetPort: {{ $canary.service.targetPort }}
     # we need portDiscovery when there are multiple ports (http and grpc, for instance)
     portDiscovery: {{ $canary.service.portDiscovery }}
-    # Istio gateways (optional)
-    {{- if gt (len $canary.service.gateways) 0 }}
-    gateways:
-      {{- range $gateway := $canary.service.gateways }}
-    - {{ $gateway | quote }}
-      {{- end}}
-    {{- end}}
-    # Istio virtual service host names (optional)
-    hosts:
-      {{- if $.Values.hostsStringArray }}
-      {{ $parts := split "," $.Values.hostsStringArray }}
-
-      {{- range $host := $parts }}
-    - {{ $host | quote }}
-      {{- end}}
-
-      {{ else }}
-
-      {{- range $host := $.Values.hosts }}
-    - {{ $host | quote }}
-      {{- end}}
-
-      {{- end}}
     # Istio traffic policy (optional)
     trafficPolicy:
       tls:

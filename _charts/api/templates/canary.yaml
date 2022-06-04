@@ -25,6 +25,9 @@ spec:
     name: {{  $name }}
   {{- end }}
   service:
+    {{- if $.Values.dark.enabled }}
+    delegation: true
+    {{- end}}
     primary:
       labels:
         app: {{ $name }}
@@ -54,13 +57,14 @@ spec:
     # we need portDiscovery when there are multiple ports (http and grpc, for instance)
     portDiscovery: {{ $canary.service.portDiscovery }}
     # Istio gateways (optional)
-    {{- if gt (len $canary.service.gateways) 0 }}
+    {{- if and (gt (len $canary.service.gateways) 0) (not $.Values.dark.enabled) }}
     gateways:
       {{- range $gateway := $canary.service.gateways }}
       - {{ $gateway | quote }}
       {{- end}}
     {{- end}}
     # Istio virtual service host names (optional)
+    {{- if not $.Values.dark.enabled }}
     hosts:
       {{- if $.Values.hostsStringArray }}
       {{ $parts := split "," $.Values.hostsStringArray }}
@@ -76,6 +80,7 @@ spec:
       {{- end}}
 
       {{- end}}
+    {{- end}}
     # Istio traffic policy (optional)
     trafficPolicy:
       tls:

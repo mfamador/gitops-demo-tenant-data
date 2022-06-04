@@ -1,0 +1,68 @@
+{{- if .Values.dark.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "api.name" . }}-main
+  labels:
+    app: {{ template "api.name" . }}
+    release: {{ .Release.Name }}
+spec:
+  gateways:
+    {{- range $gateway := .Values.virtualService.gateways }}
+    - {{ $gateway }}
+    {{- end }}
+  hosts:
+    {{- if $.Values.hostsStringArray }}
+    {{- $parts := split "," $.Values.hostsStringArray }}
+
+    {{- range $host := $parts }}
+    - {{ $host | quote }}
+    {{- end -}}
+
+    {{ else }}
+
+    {{- range $host := $.Values.hosts }}
+    - {{ $host | quote }}
+    {{- end -}}
+
+    {{- end }}
+  http:
+  {{- range $match := .Values.virtualService.match }}
+  - name: {{ $match.name }}
+    match:
+      {{- range $prefix := $match.prefixes }}
+      - uri:
+          prefix: {{ $prefix }}
+        headers:
+          {{ $.Values.dark.header.name }}:
+            exact: {{ $.Values.dark.header.value }}
+      {{- end }}
+    rewrite:
+      uri: {{ $match.rewrite }}
+    {{- if  $match.headers }}
+    headers:
+{{ toYaml $match.headers | trim | indent 6}}
+  {{- end }}
+    delegate:
+      name: {{ $.Values.name }}-dark
+      namespace: {{ $.Release.Namespace }}
+  {{- end }}
+
+  {{- range $match := .Values.virtualService.match }}
+  - name: {{ $match.name }}
+    match:
+      {{- range $prefix := $match.prefixes }}
+      - uri:
+          prefix: {{ $prefix }}
+      {{- end }}
+    rewrite:
+      uri: {{ $match.rewrite }}
+    {{- if  $match.headers }}
+    headers:
+{{ toYaml $match.headers | trim | indent 6}}
+  {{- end }}
+    delegate:
+      name: {{ $.Values.name }}
+      namespace: {{ $.Release.Namespace }}
+  {{- end }}
+{{- end}}
