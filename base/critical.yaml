@@ -19,9 +19,9 @@ spec:
     name: critical
     image:
       repository: marcoamador/critical
-    automation:
-      semver:
-        expr: 1.x.x
+      automation:
+        semver:
+          expr: 1.x.x
     ports:
     - name: http
       containerPort: 8000
