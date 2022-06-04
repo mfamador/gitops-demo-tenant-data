@@ -32,15 +32,30 @@ spec:
       enabled: true
     hosts:
     - critical.data
+    dark:
+      enabled: false
+      image:
+        repository: marcoamador/critical
+        automation:
+          semver:
+            expr: 2.x.x
+      canary:
+        enabled: true
+        analysis:
+          webhooks:
+          - name: load-test
+            type: rollout
+            url: http://flagger-loadtester.istio-system/
+            timeout: 5s
+            metadata:
+              type: cmd
+              cmd: hey -z 55s -q 5 -c 2 http://critical-dark-canary.data/loadtest
+        service:
+          port: 80
+          targetPort: 8000
     canary:
       enabled: true
       analysis:
-        defaultMetrics: true
-        interval: 30s
-        maxWeight: 50
-        metrics: [ ]
-        stepWeight: 10
-        threshold: 3
         webhooks:
         - name: load-test
           type: rollout
@@ -48,39 +63,7 @@ spec:
           timeout: 5s
           metadata:
             type: cmd
-            cmd: hey -z 30s -q 5 -c 2 http://critical-canary.data/loadtest
-      progressDeadlineSeconds: 60
+            cmd: hey -z 55s -q 5 -c 2 http://critical-canary.data/loadtest
       service:
-        match:
-          prefix: /
-          rewrite: /
-          headers:
-            request:
-              add:
-                X-Forwarded-Prefix: "/"
-          corsPolicy:
-            allowMethods:
-            - GET
-            - PUT
-            - POST
-            - OPTIONS
-            - HEAD
-            - DELETE
-            - PATCH
-            allowHeaders:
-            - authorization
-            - content-type
-            - accept
-            - origin
-            - user-agent
-            allowCredentials: false
-            maxAge: "24h"
         port: 80
-        retries:
-          attemps: 3
-          perTryTimeout: 1s
-          retryOn: gateway-error,connect-failure,refused-stream
         targetPort: 8000
-        portDiscovery: true # set to true when using gRPC
-        tls:
-          mode: DISABLE

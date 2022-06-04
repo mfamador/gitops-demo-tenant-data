@@ -143,11 +143,11 @@ dark:
     pullPolicy: Always
     automation:
       enabled: true
-      interval: 1m0s
+      interval: 5m0s
       semver:
-        expr: 2.0.x
+        expr: 2.x.x
   canary:
-    enabled: true
+    enabled: false
     progressDeadlineSeconds: 60
     skipAnalysis: false
     service:

@@ -9,3 +9,6 @@ spec:
     - critical.data.svc.cluster.local
     image:
       tag: 0.1.0 # {"$imagepolicy": "data:staging-eun-critical:tag"}
+    dark:
+      image:
+        tag: 0.1.0 # {"$imagepolicy": "data:staging-eun-critical-dark:tag"}
