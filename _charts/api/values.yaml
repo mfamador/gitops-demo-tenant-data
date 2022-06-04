@@ -19,7 +19,7 @@ image:
     enabled: true
     interval: 1m0s
     semver:
-      expr: 1.0.x
+      expr: 1.x.x
 
 canary:
   enabled: false
