@@ -148,7 +148,7 @@ dark:
         expr: 2.x.x
   canary:
     enabled: false
-    progressDeadlineSeconds: 60
+    progressDeadlineSeconds: 120
     skipAnalysis: false
     service:
       port: 80
