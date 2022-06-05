@@ -11,7 +11,7 @@ spec:
       automation:
         semver:
           expr: 1.x.x
-      tag: 1.1.0 # {"$imagepolicy": "data:staging-eun-critical:tag"}
+      tag: 1.0.0 # {"$imagepolicy": "data:staging-eun-critical:tag"}
     dark:
       enabled: true
       image:
