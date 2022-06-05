@@ -20,4 +20,4 @@ spec:
           semver:
             # It's on the `base`, it's also here for readability purposes only
             expr: 2.x.x
-        tag: 2.1.0 # {"$imagepolicy": "data:staging-eun-critical-dark:tag"}
+        tag: 2.1.1 # {"$imagepolicy": "data:staging-eun-critical-dark:tag"}
