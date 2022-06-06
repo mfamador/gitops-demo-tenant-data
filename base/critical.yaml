@@ -36,7 +36,7 @@ spec:
       enabled: true
       analysis:
         # make demo goes faster
-        interval: 10s
+        interval: 15s
         webhooks:
         - name: load-test
           type: rollout
@@ -45,7 +45,7 @@ spec:
           metadata:
             type: cmd
             # make demo goes faster
-            cmd: hey -z 8s -q 5 -c 2 http://critical-canary.data/loadtest
+            cmd: hey -z 13s -q 5 -c 2 http://critical-canary.data/loadtest
       service:
         port: 80
         targetPort: 8000
@@ -60,7 +60,7 @@ spec:
         enabled: true
         analysis:
           # make demo goes faster
-          interval: 10s
+          interval: 15s
           webhooks:
           - name: load-test
             type: rollout
@@ -69,7 +69,7 @@ spec:
             metadata:
               type: cmd
               # make demo goes faster
-              cmd: hey -z 8s -q 5 -c 2 http://critical-dark-canary.data/loadtest
+              cmd: hey -z 13s -q 5 -c 2 http://critical-dark-canary.data/loadtest
         service:
           port: 80
           targetPort: 8000
