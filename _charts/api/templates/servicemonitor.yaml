@@ -11,6 +11,7 @@ spec:
   endpoints:
   - scheme: http
     targetPort: http
+    interval: 5s
   jobLabel: {{ include "api.name" . }}
   namespaceSelector:
     matchNames:
