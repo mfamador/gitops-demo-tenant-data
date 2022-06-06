@@ -1,9 +1,0 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: echo
-spec:
-  values:
-    hosts:
-    - echo.production.euw
-    - echo.data.svc.cluster.local

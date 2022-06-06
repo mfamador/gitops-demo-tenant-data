@@ -2,3 +2,14 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: critical
+spec:
+  values:
+    image:
+      automation:
+        semver:
+          expr: 1.x.x
+    dark:
+      image:
+        automation:
+          semver:
+            expr: 2.x.x

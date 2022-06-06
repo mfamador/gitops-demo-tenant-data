@@ -4,7 +4,5 @@ namespace: data
 resources:
 - ../automation
 - ../_sources
-- echo.yaml
-- hello.yaml
 - pipeline.yaml
 - critical.yaml

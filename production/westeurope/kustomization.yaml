@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
 - ../base
 patchesStrategicMerge:
-- echo-patch.yaml
-- hello-patch.yaml
 - critical-patch.yaml
 - pipeline-patch.yaml
 transformers:
