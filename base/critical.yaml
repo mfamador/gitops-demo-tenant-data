@@ -33,7 +33,7 @@ spec:
     hosts:
     - critical.data
     canary:
-      enabled: false
+      enabled: true
       analysis:
         # make demo goes faster
         interval: 10s
