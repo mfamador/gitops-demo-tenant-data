@@ -9,7 +9,13 @@ spec:
     - critical.data.svc.cluster.local
     image:
       tag: 1.0.0 # {"$imagepolicy": "data:staging-eun-critical:tag"}
+      automation:
+        semver:
+          expr: 1.x.x
     dark:
-      enabled: false
+      enabled: true
       image:
         tag: 2.0.0 # {"$imagepolicy": "data:staging-eun-critical-dark:tag"}
+        automation:
+          semver:
+            expr: 2.x.x
